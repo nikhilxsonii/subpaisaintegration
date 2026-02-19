@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>SabPaisa Payment</title>
+<style>
+  /* Sofia Pro font face - replace URLs with your actual font file paths */
+  @font-face {
+    font-family: 'Sofia Pro';
+    src: url('/static/fonts/SofiaPro-Regular.woff2') format('woff2'),
+         url('/static/fonts/SofiaPro-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Sofia Pro';
+    src: url('/static/fonts/SofiaPro-Bold.woff2') format('woff2'),
+         url('/static/fonts/SofiaPro-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f57c00 0%, #1976d2 100%);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .container {
+    background-color: #fff;
+    width: 700px; /* Increased width */
+    max-width: 90%;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    padding: 40px 30px 35px;
+    box-sizing: border-box;
+  }
+
+  h1 {
+    font-family: 'Sofia Pro', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 2.2rem;
+    text-align: center;
+    margin-bottom: 30px;
+    user-select: none;
+  }
+  h1 .orange {
+    color: #f57c00;
+  }
+  h1 .blue {
+    color: #1976d2;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  textarea,
+  input[type="text"] {
+    width: 100%;
+    padding: 14px 15px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    resize: none;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  textarea[readonly], input[readonly] {
+    background-color: #f9f9f9;
+    color: #555;
+    cursor: not-allowed;
+  }
+  textarea:focus,
+  input[type="text"]:focus {
+    border-color: #1976d2;
+    outline: none;
+  }
+
+  input[type="submit"] {
+    background-color: #1976d2;
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    user-select: none;
+  }
+  input[type="submit"]:hover:not(:disabled) {
+    background-color: #155fa0;
+  }
+  input[type="submit"]:disabled {
+    background-color: #90caf9;
+    cursor: default;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>
+    <span class="orange">Sab</span><span class="blue">Paisa</span>
+  </h1>
+
+  <form action="https://stage-securepay.sabpaisa.in/SabPaisa/sabPaisaInit?v=1" method="post" autocomplete="off" spellcheck="false" novalidate>
+    <textarea name="encData" rows="7" readonly>{{ enc_data }}</textarea>
+    <input type="text" name="clientCode" value="{{ client_code }}" readonly />
+    <input type="submit" value="Submit" />
+  </form>
+</div>
+
+<script>
+  const form = document.querySelector('form');
+  const submitBtn = form.querySelector('input[type="submit"]');
+
+  form.addEventListener('submit', () => {
+    submitBtn.disabled = true;
+    submitBtn.value = 'Submitting...';
+  });
+</script>
+
+</body>
+</html>
